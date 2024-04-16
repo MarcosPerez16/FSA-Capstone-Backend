@@ -1,0 +1,43 @@
+CREATE TABLE Products (
+
+    ID SERIAL PRIMARY KEY,
+    Name VARCHAR(255) NOT NULL,
+    Description TEXT,
+    Price DECIMAL(10, 2) NOT NULL,
+    Category VARCHAR(100),
+    StockQuantity INT DEFAULT 0,
+    ImageURL TEXT
+
+
+);
+
+CREATE TABLE Categories (
+    ID SERIAL PRIMARY KEY,
+    Name VARCHAR(100) NOT NULL
+
+);
+
+CREATE TABLE Users (
+    ID SERIAL PRIMARY KEY,
+    Username VARCHAR(50) UNIQUE NOT NULL,
+    Email VARCHAR(100) UNIQUE NOT NULL,
+    Password VARCHAR(255) NOT NULL,
+    Address TEXT
+
+
+);
+
+CREATE TABLE Orders (
+    ID SERIAL PRIMARY KEY,
+    UserID INT REFERENCES Users(ID),
+    TotalAmount DECIMAL(10, 2) NOT NULL,
+    OrderDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE OrderItems (
+    ID SERIAL PRIMARY KEY,
+    OrderID INT REFERENCES Orders(ID),
+    ProductID INT REFERENCES Products(ID),
+    Quantity INT NOT NULL,
+    UnitPrice DECIMAL(10, 2) NOT NULL
+);
